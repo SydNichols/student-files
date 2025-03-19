@@ -43,5 +43,24 @@ function displayEmployees(employeeData) {
         `;
 
         galleryDiv.insertAdjacentHTML('beforeend', html);
+
+        //card listener functionality for when an employee card is clicked
+        cardListeners();
     });
+}
+
+//adding event listeners to the employee cards
+function cardListeners() {
+    const cards = document.querySelectorAll('.card');
+
+    cards.forEach((card, index) => {
+        card.addEventListener('click', () => {
+            displayModal(index);
+        });
+    });
+}
+
+//display for when a card is clicked
+function displayModal(index) {
+    console.log('displayed index:', index)
 }
