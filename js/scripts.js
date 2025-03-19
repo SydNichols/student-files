@@ -43,10 +43,10 @@ function displayEmployees(employeeData) {
         `;
 
         galleryDiv.insertAdjacentHTML('beforeend', html);
-
-        //card listener functionality for when an employee card is clicked
-        cardListeners();
     });
+
+    //card listener functionality for when an employee card is clicked
+    cardListeners();
 }
 
 //adding event listeners to the employee cards
@@ -62,9 +62,16 @@ function cardListeners() {
 
 //display for when a card is clicked
 function displayModal(index) {
-    console.log('displayed index:', index)
+    //console.log('displayed index:', index)
+
+    //closing any existing open modals
+    closeModal();
 
     const employee = employees[index];
+
+    //formatting the date becuase the natural format isn't reader-friendly
+    const dob = new Date(employee.dob.date);
+    const formattedDOB = `${(dob.getMonth() + 1).toString().padStart(2, '0')}/${dob.getDate().toString().padStart(2, '0')}/${dob.getFullYear()}`;
     
 
     //display the modal after click
@@ -76,11 +83,11 @@ function displayModal(index) {
                     <img class="modal-img" src="${employee.picture.large}" alt="profile picture">
                     <h3 id="name" class="modal-name cap">${employee.name.first} ${employee.name.last}</h3>
                     <p class="modal-text">${employee.email}</p>
-                    <p class="modal-text cap">${employee.location.city}</p>
+                    <p class="modal-text cap">City: ${employee.location.city}</p>
                     <hr>
                     <p class="modal-text">${employee.cell}</p>
                     <p class="modal-text">${employee.location.street.number} ${employee.location.street.name}, ${employee.location.city}, ${employee.location.state} ${employee.location.postcode}</p>
-                    <p class="modal-text">Birthday: ${employee.dob.date}
+                    <p class="modal-text">Birthday: ${formattedDOB}</p>
                 </div>
             </div>
         </div>
