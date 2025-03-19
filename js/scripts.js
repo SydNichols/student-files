@@ -62,7 +62,7 @@ function cardListeners() {
 
 //display for when a card is clicked
 function displayModal(index) {
-    //console.log('displayed index:', index)
+    console.log('displayed index:', index)
 
     const employee = employees[index];
     
@@ -86,5 +86,17 @@ function displayModal(index) {
         </div>
     `;
 
+    //add the html to the body of the html
     document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+    //add event listener to the close button for the modal 
+    document.getElementById('modal-close-btn').addEventListener('click', closeModal);
+}
+
+//function to close the modal when the X button is clicked
+function closeModal() {
+    const modalContainer = document.querySelector('.modal-container');
+    if (modalContainer) {
+        modalContainer.remove();
+    }
 }
