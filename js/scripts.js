@@ -148,7 +148,7 @@ function searchFeature() {
     `;
 
     //adding the search container to the html
-    document.querySelector('.search-container').insertAdjacentHTML('beforehand', searchHTML);
+    document.querySelector('.search-container').insertAdjacentHTML('beforeend', searchHTML);
 
     const searchInput = document.getElementById('search-input');
 
