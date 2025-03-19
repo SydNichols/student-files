@@ -11,6 +11,7 @@ function fetchData() {
         .then(data => {
             employees = data.results;
             displayEmployees(employees);
+            searchFeature();
         })
         .catch(error => console.log('Error fetching data:', error));
 }
@@ -62,6 +63,7 @@ function cardListeners() {
 
 //display for when a card is clicked
 function displayModal(index) {
+
     //console.log('displayed index:', index)
 
     //closing any existing open modals
@@ -90,6 +92,11 @@ function displayModal(index) {
                     <p class="modal-text">Birthday: ${formattedDOB}</p>
                 </div>
             </div>
+
+            <div class="modal-btn-container">
+                <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
+                <button type="button" id="modal-next" class="modal-next btn">Next</button>
+            </div>
         </div>
     `;
 
@@ -98,6 +105,30 @@ function displayModal(index) {
 
     //add event listener to the close button for the modal 
     document.getElementById('modal-close-btn').addEventListener('click', closeModal);
+
+    document.getElementById('modal-prev').addEventListener('click', () => {
+        closeModal();
+
+        //calculating the previous index
+        let prevIndex = index - 1;
+        if (prevIndex < 0) {
+            prevIndex = employees.length - 1;
+        }
+
+        displayModal(prevIndex);
+    })
+
+    document.getElementById('modal-next').addEventListener('click', () => {
+        closeModal();
+
+        //calculating the next index
+        let nextIndex = index + 1;
+        if (nextIndex >= employees.length) {
+            nextIndex = 0;
+        }
+
+        displayModal(nextIndex);
+    })
 }
 
 //function to close the modal when the X button is clicked
@@ -106,4 +137,47 @@ function closeModal() {
     if (modalContainer) {
         modalContainer.remove();
     }
+}
+
+function searchFeature() {
+    const searchHTML = `
+        <form action="#" method="get">
+            <input type="search" id="search-input" class="search-input" placeholder="Search employees...">
+            <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit"> 
+        </form>
+    `;
+
+    //adding the search container to the html
+    document.querySelector('.search-container').insertAdjacentHTML('beforehand', searchHTML);
+
+    const searchInput = document.getElementById('search-input');
+
+    document.querySelector('form').addEventListener('submit', e => {
+        e.preventDefault();
+        const searchTerm = searchInput.value.toLowerCase();
+        searchEmployees(searchTerm);
+    });
+
+    searchInput.addEventListener('keyup', () => {
+        const searchTerm = searchInput.value.toLowerCase();
+        searchEmployees(searchTerm);
+    });
+}
+
+function searchEmployees(searchTerm) {
+    //getting employee cards
+    const cards = document.querySelectorAll('.card');
+
+    cards.forEach((card, index) => {
+        const firstName = employees[index].name.first.toLowerCase();
+        const lastName = employees[index].name.last.toLowerCase();
+        const fullName = `${firstName} ${lastName}`;
+
+        //checking for the search term
+        if (fullName.includes(searchTerm)) {
+            card.style.display = '';
+        } else {
+            card.style.display = 'none';
+        }
+    });
 }

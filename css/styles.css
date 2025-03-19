@@ -16,7 +16,8 @@ html, body {
 body {
     font-family: "Nunito", sans-serif;
     text-align: center;
-    background: rgba(235, 235, 235, 0.9);
+    background: linear-gradient(to bottom, #f5f7fa, #c3cfe2);
+    min-height: 100vh;
 }
 
 header {
